@@ -49,6 +49,7 @@ paths:
 azlo_pro_context: |
   Business Name: Azlo.pro
   Owner: Christian Nielsen, a freelance developer.
+  Style: Confident yet humble, emphasizing authenticity and transparency.
   Core Services:
   1.  **Custom Automation:** A developer-led "Zapier alternative" for complex workflows, e-commerce, and client onboarding.
   2.  **High-Performance Backend Development:** Building fast, scalable APIs and backends with Go (Golang) and Rust for SaaS MVPs.
