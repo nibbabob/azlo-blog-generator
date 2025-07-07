@@ -171,7 +171,6 @@ graph TB
 <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Gemini"/>
 <img src="https://img.shields.io/badge/OpenAI-GPT--4-00A67E?style=for-the-badge&logo=openai&logoColor=white" alt="OpenAI GPT-4"/>
 <img src="https://img.shields.io/badge/Anthropic-Claude-8A63D2?style=for-the-badge" alt="Anthropic Claude"/>
-<img src="https://img.shields.io/badge/Azure-OpenAI-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" alt="Azure OpenAI"/>
 </p>
 
 ### ⚡ **Infrastructure**
@@ -179,7 +178,6 @@ graph TB
 <p align="center">
 <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="AWS"/>
 <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white" alt="Google Cloud"/>
-<img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" alt="Azure"/>
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
 </p>
 
@@ -255,6 +253,8 @@ title
 <summary><b>🎬 5. Generate your content</b></summary>
 
 ```bash
+python -m pip install -r requirements.txt
+$env:GEMINI_API_KEY="your-key"
 python main.py
 ```
 
@@ -358,13 +358,13 @@ The system is built to be **model-agnostic**. Currently optimized for Google's e
 <tr>
 <td>
 
-- **OpenAI** (GPT-4, DALL-E)
 - **Google** (Gemini, Imagen)
-- **Anthropic** (Claude)
 
 </td>
 <td>
 
+- **Anthropic** (Claude)
+- **OpenAI** (GPT-4, DALL-E)
 - **Azure OpenAI** (Enterprise GPT)
 - **Open-source models** (Llama, Mistral)
 - **Custom fine-tuned models**
