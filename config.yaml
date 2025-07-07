@@ -1,0 +1,61 @@
+# -----------------------------------------------------------------------------
+# Main Configuration for the Hugo Blog Post Generator
+# -----------------------------------------------------------------------------
+
+# --- API and Model Configuration ---
+# See https://ai.google.dev/models/gemini for available text models
+# See https://cloud.google.com/vertex-ai/docs/generative-ai/image/overview for available image models
+api:
+  # Delay in seconds between consecutive API calls to avoid rate limiting
+  call_delay_seconds: 5
+  # Maximum number of times to retry a failed API call
+  max_retries: 5
+  # Initial time in seconds to wait before the first retry (doubles with each attempt)
+  initial_backoff_seconds: 10
+  # Time to wait between processing each blog post title from the CSV
+  interval_between_posts_seconds: 60
+
+models:
+  # Model for generating text (outlines, article content)
+  text_model_name: 'gemini-2.5-pro'
+  # Model for generating the initial blog post configuration (title, keywords, etc.)
+  # This can be a faster/cheaper model if desired.
+  config_generation_model: 'gemini-2.5-pro'
+  # Vertex AI model for image generation
+  image_model_name: 'imagen-3.0-generate-002'
+
+# --- Vertex AI Configuration ---
+# For using the image generation API
+vertex_ai:
+  # Your Google Cloud Platform Project ID
+  gcp_project_id: "your-gcp-project-id"
+  # The GCP location where your Vertex AI resources are hosted (e.g., "us-central1")
+  gcp_location: "your-gcp-location"
+
+# --- File and Path Configuration ---
+paths:
+  # Default path to the input CSV file containing blog titles
+  # Can be overridden with a command-line argument.
+  default_csv_path: "blog_titles.csv"
+  # Default path to your Hugo project's content/posts directory
+  # Can be overridden with a command-line argument.
+  hugo_posts_path: "./content/posts"
+  # Temporary directory for storing images before they are moved to the final bundle
+  temp_image_dir: "./temp_images"
+
+# --- Business Context ---
+# This context is injected into the AI prompts to ensure the generated content
+# aligns with the business's brand, services, and strategic goals.
+azlo_pro_context: |
+  Business Name: Azlo.pro
+  Owner: Christian Nielsen, a freelance developer.
+  Core Services:
+  1.  **Custom Automation:** A developer-led "Zapier alternative" for complex workflows, e-commerce, and client onboarding.
+  2.  **High-Performance Backend Development:** Building fast, scalable APIs and backends with Go (Golang) and Rust for SaaS MVPs.
+  3.  **Rapid Prototyping & MVPs:** Quickly turning concepts into working prototypes (MVPs) with a focus on production-ready technology (no throwaway code).
+  4.  **AI Integration:** Integrating Large Language Models (LLMs like GPT, Claude) into workflows for data analysis and automation.
+  5.  **Data Unification & BI Dashboards:** Building custom ETL pipelines and dashboards to unify messy marketing or business data.
+  USP:
+  - **Problem-First Approach:** Solves tangible business pain points.
+  - **Production-Ready from Day One:** MVPs are built on a solid foundation (Go/Rust) to avoid costly rebuilds.
+  - **Target Audience:** Business owners, managers, and entrepreneurs feeling the pain of manual work, data chaos, or scaling limitations.

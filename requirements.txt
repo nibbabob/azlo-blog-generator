@@ -1,0 +1,5 @@
+pyyaml
+google-generativeai
+Pillow
+google-api-core
+google-cloud-aiplatform

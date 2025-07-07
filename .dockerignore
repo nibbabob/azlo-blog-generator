@@ -1,0 +1,16 @@
+# Git and Docker
+.git
+.gitignore
+Dockerfile
+.dockerignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+
+# Output - Prevent build context from including previous runs
+output/
