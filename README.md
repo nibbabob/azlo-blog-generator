@@ -180,7 +180,6 @@ graph TB
 <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="AWS"/>
 <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white" alt="Google Cloud"/>
 <img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" alt="Azure"/>
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
 </p>
 
@@ -262,15 +261,6 @@ python main.py
 Sit back and watch as each title becomes a complete, publication-ready blog post! ✨
 
 </details>
-
-### 🐳 Docker Deployment (Recommended for Production)
-
-For consistent, scalable execution:
-
-```bash
-docker build -t ai-blog-generator .
-docker run -e GEMINI_API_KEY=your-key -v $(pwd)/output:/app/output ai-blog-generator
-```
 
 ## 🎯 How It Actually Works
 
