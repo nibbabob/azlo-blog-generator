@@ -18,9 +18,9 @@
   </text>
 </svg>
 
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/ai-blog-generator?style=for-the-badge&logo=github&color=6366f1)](https://github.com/yourusername/ai-blog-generator)
+[![GitHub stars](https://img.shields.io/github/stars/nibbabob/azlo-blog-generator?style=for-the-badge&logo=github&color=6366f1)](https://github.com/nibbabob/azlo-blog-generator)
 [![License](https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.8+-f59e0b?style=for-the-badge&logo=python)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.13.5+-f59e0b?style=for-the-badge&logo=python)](https://python.org)
 
 </div>
 
@@ -209,8 +209,8 @@ You'll need:
 <summary><b>📦 1. Clone and prepare</b></summary>
 
 ```bash
-git clone <your-repo-url>
-cd ai-blog-generator
+git clone https://github.com/nibbabob/azlo-blog-generator.git
+cd azlo-blog-generator
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -453,7 +453,7 @@ I provide **[custom AI integration services](https://azlo.pro/ai-integration-ser
 
 | Type | Channel |
 |------|---------|
-| 🐛 **Quick questions** | [Open an issue here](https://github.com/yourusername/repo/issues) |
+| 🐛 **Quick questions** | [Open an issue here](https://github.com/nibbabob/azlo-blog-generator/issues) |
 | 🤝 **Collaboration** | [Contact me directly](https://azlo.pro/index.html#contact) |
 | 👀 **See it in action** | [Check out my blog](https://azlo.pro/blogs/) |
 
