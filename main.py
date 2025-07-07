@@ -15,6 +15,10 @@ from PIL import Image, ImageDraw, ImageFont
 from google.api_core import exceptions
 import shutil
 
+# --- New imports for the loading spinner ---
+import threading
+import itertools
+
 # --- Vertex AI imports ---
 import vertexai
 from vertexai.generative_models import GenerativeModel
@@ -36,10 +40,45 @@ def load_config(config_path='config.yaml') -> Dict:
         sys.exit(1)
 
 # --- Global Configuration ---
-# All settings are now loaded from the YAML file into this single dictionary.
 CONFIG = load_config()
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# --- NEW: Loading Spinner Class ---
+class LoadingSpinner:
+    """A context manager for showing a loading spinner in the console."""
+    def __init__(self, text: str = "Loading...", delay: float = 0.1):
+        self.spinner = itertools.cycle(['-', '/', '|', '\\'])
+        self.delay = delay
+        self.text = text
+        self.busy = False
+        self.thread = None
+
+    def _spin(self):
+        while self.busy:
+            # Use \r (carriage return) to move cursor to the beginning of the line
+            sys.stdout.write(f"\r{self.text} {next(self.spinner)}")
+            sys.stdout.flush()
+            time.sleep(self.delay)
+
+    def __enter__(self):
+        self.busy = True
+        # The spinner runs on a separate thread
+        self.thread = threading.Thread(target=self._spin)
+        self.thread.start()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.busy = False
+        # Add a check to ensure the thread was successfully created
+        if self.thread is not None:
+            self.thread.join()
+        
+        # Clear the spinner line and move cursor to the beginning
+        sys.stdout.write('\r' + ' ' * (len(self.text) + 2) + '\r')
+        sys.stdout.flush()
+        
+        # If an exception occurred, it will be re-raised
+        return False
 
 # --- Helper Functions ---
 def slugify(text: str) -> str:
@@ -292,24 +331,34 @@ def assemble_bundle(hugo_path: str, article_idea: dict, plan: dict, article_md: 
         f.write(content_with_figures)
     logging.info(f"Successfully created {bundle_path / 'index.md'}")
 
+# --- UPDATED: Process Single Title with Loading Spinner ---
 def process_single_title(title: str, hugo_posts_path: str):
-    """Process a single blog title through the entire pipeline."""
+    """Process a single blog title through the entire pipeline with loading visuals."""
     try:
-        # --- USES CONFIG ---
         call_delay = CONFIG['api']['call_delay_seconds']
 
-        article_idea = generate_blog_config(title)
+        with LoadingSpinner("Step 1/5: Generating strategic configuration..."):
+            article_idea = generate_blog_config(title)
         if not article_idea:
             raise ValueError("Failed to generate article idea config.")
         full_config = {'article_idea': article_idea, 'hugo_posts_path': hugo_posts_path}
+        time.sleep(call_delay)
 
+        with LoadingSpinner("Step 2/5: Creating article outline and image plan..."):
+            plan = generate_plan(full_config)
         time.sleep(call_delay)
-        plan = generate_plan(full_config)
+
+        with LoadingSpinner("Step 3/5: Writing article Markdown..."):
+            article_markdown = generate_article_text(plan)
         time.sleep(call_delay)
-        article_markdown = generate_article_text(plan)
-        time.sleep(call_delay)
-        image_filenames = generate_images(plan)
-        assemble_bundle(hugo_posts_path, article_idea, plan, article_markdown, image_filenames)
+
+        # The generate_images function logs its own progress for each image,
+        # which will appear below the main spinner line.
+        with LoadingSpinner("Step 4/5: Generating all images..."):
+            image_filenames = generate_images(plan)
+
+        with LoadingSpinner("Step 5/5: Assembling Hugo page bundle..."):
+            assemble_bundle(hugo_posts_path, article_idea, plan, article_markdown, image_filenames)
 
         logging.info(f"✅ Successfully processed: {title}")
         return True
